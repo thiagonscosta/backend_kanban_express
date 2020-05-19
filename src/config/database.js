@@ -2,11 +2,11 @@ require('dotenv').config();
 
 module.exports = {
   development: {
-    username: process.env.DB_USERNAME,
-    password: process.env.DB_PASSWORD,
-    database: "knb_backend_development",
-    host: "127.0.0.1",
-    dialect: "postgres",
+    username: process.env.DATABASE_USERNAME,
+    password: process.env.DATABASE_PASSWORD,
+    database: process.env.DATABASE_DEVELOPMENT,
+    host: process.env.DATABASE_PORT,
+    dialect: process.env.DATABASE_DIALECT,
     // operatorsAliases: false
   },
   test: {
@@ -15,7 +15,7 @@ module.exports = {
     database: "database_test",
     host: "127.0.0.1",
     dialect: "postgres",
-    operatorsAliases: false
+    // operatorsAliases: false
   },
   production: {
     username: "root",
@@ -23,6 +23,6 @@ module.exports = {
     database: "database_production",
     host: "127.0.0.1",
     dialect: "postgres",
-    operatorsAliases: false
+    // operatorsAliases: false
   }
 }

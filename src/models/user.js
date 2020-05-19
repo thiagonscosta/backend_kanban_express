@@ -1,21 +1,45 @@
 'use strict';
+var bcrypt = require('bcryptjs');
+require('dotenv').config();
+
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
-    name: { 
+    name: {
       allowNull: false,
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
     },
-    email: { 
+    email: {
       allowNull: false,
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      trim: true,
     },
-    password: { 
+    password: {
       allowNull: false,
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      trim: true,
     },
-  }, {});
+    avatarUrl: {
+      allowNull: true,
+      type: DataTypes.STRING,
+    }
+  }, {
+    hooks: {
+      beforeCreate: (user) => {
+        const salt = bcrypt.genSaltSync();
+        user.password = bcrypt.hashSync(user.password, salt);
+      } 
+    }
+  });
   User.associate = function(models) {
-    this.hasMany(models.Task);
+    User.hasMany(models.Column, {
+      foreingKey: 'userId',
+      as: 'columns',
+    });
+
+    User.hasMany(models.Task, {
+      foreingKey: 'userId',
+      as: 'tasks',
+    })
   };
   return User;
 };

@@ -1,10 +1,17 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Column = sequelize.define('Column', {
-    name: DataTypes.STRING
+    title: {
+      allowNull: false,
+      type: DataTypes.STRING,
+    }
   }, {});
   Column.associate = function(models) {
-    this.hasMany(models.Task);
+    Column.hasMany(models.Task, {
+      foreignKey: 'columnId',
+      as: 'tasks',
+      onDelete: 'CASCADE'
+    });
   };
   return Column;
 };

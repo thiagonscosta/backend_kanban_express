@@ -8,14 +8,27 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      description: {
+      content: {
+        allowNull: false,
         type: Sequelize.STRING
       },
-      createdAt: {
-        type: Sequelize.DATEONLY
+      columnId: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        references: {
+          model: 'Columns',
+          key: 'id'
+        }
       },
-      updatedAt: {
-        type: Sequelize.DATEONLY
+      userId: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        references: {
+          model: 'Users',
+          key: 'id'
+        }
       },
       createdAt: {
         allowNull: false,

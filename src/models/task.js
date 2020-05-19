@@ -1,13 +1,30 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Task = sequelize.define('Task', {
-    description: DataTypes.STRING,
-    createdAt: DataTypes.DATEONLY,
-    updatedAt: DataTypes.DATEONLY
+    content: {
+      allowNull: false,
+      type: DataTypes.STRING,
+    },
+    columnId: {
+      allowNull: false,
+      type: DataTypes.INTEGER,
+    },
+    userId: { 
+      allowNull: false,
+      type: DataTypes.INTEGER
+    }
   }, {});
   Task.associate = function(models) {
-    this.belongsTo(models.User);
-    this.belongsTo(models.Column);
+    Task.belongsTo(models.User, {
+      foreignKey: 'userId',
+      as: 'author',
+    });
+
+    Task.belongsTo(models.Column, {
+      foreignKey: 'columnId',
+      as: 'column'
+    });
+    
   };
   return Task;
 };
