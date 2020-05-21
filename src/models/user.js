@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       trim: true,
     },
-    avatarUrl: {
+    avatar: {
       allowNull: true,
       type: DataTypes.STRING,
     }
@@ -31,13 +31,13 @@ module.exports = (sequelize, DataTypes) => {
     }
   });
   User.associate = function(models) {
-    User.hasMany(models.Column, {
-      foreingKey: 'userId',
-      as: 'columns',
-    });
+    // User.hasMany(models.Column, {
+    //   foreingKey: 'userId',
+    //   as: 'columns',
+    // });
 
     User.hasMany(models.Task, {
-      foreingKey: 'userId',
+      foreignKey: 'userId',
       as: 'tasks',
     })
   };
